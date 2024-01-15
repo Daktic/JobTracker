@@ -1,6 +1,8 @@
 
 import os
 import re
+
+import pandas as pd
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
@@ -36,7 +38,7 @@ class Google:
             print('No data found.')
             return None
         else:
-            return values
+            return pd.DataFrame(values[1:], columns=values[0])
 
     def connect(self):
         # If credentials is None, get the credentials
