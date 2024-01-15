@@ -19,6 +19,8 @@ class Credentials:
                     cred_json = json.load(f)
                     self.client_id = cred_json["client_id"]
                     f.close()
+                    return
+            print("credentials.json not found. Please place the file in the /google_credentials directory.")
 
         except FileNotFoundError:
             print("credentials.json not found. Please place the file in the current directory.")
