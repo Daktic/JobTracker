@@ -28,10 +28,11 @@ class MyTestCase(unittest.TestCase):
                 os.remove(credential_path + "/credentials.json")
 
     def test_get_sheet_df(self):
-        gi = Google().connect()
+        g = Google()
+        g.connect()
         sheet_id = "1IeUXt1ZlMQpGBscV5QTEWqxKFOXiH7NK8W5ZmK-xnZk"
         sheet_name = "Sheet1"
-        df = gi.get_sheet_df(sheet_id, sheet_name)
+        df = g.get_sheet_df(sheet_id, sheet_name)
         print(df)
 
 
