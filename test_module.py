@@ -1,7 +1,7 @@
 import json
 import os
 import unittest
-from google import Credentials
+from google import Google
 
 
 class MyTestCase(unittest.TestCase):
@@ -18,7 +18,7 @@ class MyTestCase(unittest.TestCase):
             exit(1)
 
         # Instantiate Credentials class and test
-        creds = Credentials()
+        creds = Google()
         creds.get_credentials()
         try:
             filename = os.listdir(credential_path)[0]  # Assumes only one file in the directory

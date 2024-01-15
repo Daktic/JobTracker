@@ -3,7 +3,7 @@ import os
 import re
 
 
-class Credentials:
+class Google:
     def __init__(self):
         self.client_id = None
 
