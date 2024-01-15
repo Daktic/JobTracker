@@ -13,14 +13,12 @@ class Credentials:
         """
         try:
             current_dir = os.getcwd()
-            for filename in os.listdir(current_dir+"/google_credentials"):
-                if re.match(".*\.json", filename):
-                    f = open(current_dir+"/google_credentials/"+filename, "r")
-                    cred_json = json.load(f)
-                    self.client_id = cred_json["client_id"]
-                    f.close()
-                    return
-            print("credentials.json not found. Please place the file in the /google_credentials directory.")
+            filename = os.listdir(current_dir+"/google_credentials")[0] # Assumes only one file in the directory
+            if re.match(".*\.json", filename):
+                f = open(current_dir+"/google_credentials/"+filename, "r")
+                cred_json = json.load(f)
+                self.client_id = cred_json["client_id"]
+                f.close()
 
         except FileNotFoundError:
             print("credentials.json not found. Please place the file in the current directory.")
