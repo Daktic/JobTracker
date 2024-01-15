@@ -1,11 +1,12 @@
 import json
 import os
 import re
-
+# from google.oauth2.credentials import Credentials
+# from googleapiclient.discovery import build
 
 class Google:
     def __init__(self):
-        self.client_id = None
+        self.credentials = None
 
     def get_credentials(self):
         """
@@ -16,10 +17,17 @@ class Google:
             filename = os.listdir(current_dir+"/google_credentials")[0] # Assumes only one file in the directory
             if re.match(".*\.json", filename):
                 f = open(current_dir+"/google_credentials/"+filename, "r")
-                cred_json = json.load(f)
-                self.client_id = cred_json["client_id"]
+                self.credentials = json.load(f)
                 f.close()
 
         except FileNotFoundError:
             print("credentials.json not found. Please place the file in the current directory.")
             exit(1)
+
+    def get_sheet_df(self):
+        pass
+
+    # def connect(self):
+    #     # Create credentials from the service account key file
+    #     credentials = service_account.Credentials.from_service_account_file(
+    #         service_account_file, scopes=['https://www.googleapis.com/auth/spreadsheets'])

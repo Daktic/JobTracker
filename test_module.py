@@ -25,7 +25,7 @@ class MyTestCase(unittest.TestCase):
             f = open(os.path.join(credential_path, filename), "r")
             cred_json = json.load(f)
             client_id = cred_json["client_id"]
-            self.assertEqual(client_id, creds.client_id)
+            self.assertEqual(client_id, creds.credentials["client_id"])
             f.close()
         finally:
             if os.path.exists(credential_path + "/credentials.json"):
