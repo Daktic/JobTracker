@@ -1,7 +1,7 @@
 import json
 import os
 import unittest
-from google import Google
+from google_interface import Google
 
 
 class MyTestCase(unittest.TestCase):
@@ -22,14 +22,18 @@ class MyTestCase(unittest.TestCase):
         creds.get_credentials()
         try:
             filename = os.listdir(credential_path)[0]  # Assumes only one file in the directory
-            f = open(os.path.join(credential_path, filename), "r")
-            cred_json = json.load(f)
-            client_id = cred_json["client_id"]
-            self.assertEqual(client_id, creds.credentials["client_id"])
-            f.close()
+            self.assertEqual(os.path.join(os.getcwd(), "google_credentials", filename), creds.credential_file_path)
         finally:
             if os.path.exists(credential_path + "/credentials.json"):
                 os.remove(credential_path + "/credentials.json")
+
+    def test_get_sheet_df(self):
+        gi = Google().connect()
+        sheet_id = "1IeUXt1ZlMQpGBscV5QTEWqxKFOXiH7NK8W5ZmK-xnZk"
+        sheet_name = "Sheet1"
+        df = gi.get_sheet_df(sheet_id, sheet_name)
+        print(df)
+
 
 
 if __name__ == '__main__':
