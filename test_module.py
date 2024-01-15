@@ -18,10 +18,11 @@ class MyTestCase(unittest.TestCase):
         # Instantiate Credentials class and test
         creds = Credentials()
         creds.get_credentials()
-        self.assertEqual('123456789', creds.client_id)  # Test if the client_id is correct
+        try:
+            self.assertEqual('123456789', creds.client_id)  # Test if the client_id is correct
+        finally:
+            os.remove(fake_credentials_path)
 
-        # Remove fake credentials.json file
-        os.remove(fake_credentials_path)
 
 if __name__ == '__main__':
     unittest.main()
