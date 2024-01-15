@@ -33,6 +33,10 @@ class JobList:
             ]
             df = df.append(job_line, ignore_index=True)
 
+    def from_df(self, df: pd.DataFrame):
+        for index, row in df.iterrows():
+            self.add_job(row["Company"], row["Title"], row["Locations"].split(", "), row["Site"])
+
 
 # For updating status on the application
 class Status(Enum):
