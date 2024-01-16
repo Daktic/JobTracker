@@ -2,6 +2,7 @@ import json
 import os
 import unittest
 from google_interface import Google
+from main import get_config
 
 
 class MyTestCase(unittest.TestCase):
@@ -33,7 +34,13 @@ class MyTestCase(unittest.TestCase):
         sheet_id = "1IeUXt1ZlMQpGBscV5QTEWqxKFOXiH7NK8W5ZmK-xnZk"
         sheet_name = "Sheet1"
         df = g.get_sheet_df(sheet_id, sheet_name)
-        print(df)
+        print(df.columns)
+        # self.assertIsNotNone(df)
+
+    def test_get_config(self):
+        config = get_config()
+        self.assertEqual(config["sheet_id"], "1IeUXt1ZlMQpGBscV5QTEWqxKFOXiH7NK8W5ZmK-xnZk")
+
 
 
 
