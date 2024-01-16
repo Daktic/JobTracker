@@ -6,21 +6,23 @@ def get_config():
         return json.load(f)
 
 
-def app():
-    config = get_config()
-
-    root = tk.Tk()
-    root.title("Google Sheet Manager")
-
-
-    root.geometry("500x500")
-    # Set background color to white
-    root.configure(bg="white")
+class Application(tk.Frame):
+    def __init__(self, master=None):
+        tk.Frame.__init__(self, master)
+        self.grid()
+        self.createWidgets()
+        self.master.geometry("500x500")
 
 
-    label = tk.Label(root, text="Hello, Tkinter!")
-    label.pack()  # Use pack() to add it to the window
-    root.mainloop()
+
+    def createWidgets(self):
+        self.quitButton = tk.Button(self, text='Quit',
+            command=self.quit)
+        self.quitButton.grid()
+
+
 
 if __name__ == "__main__":
-    app()
+    app = Application()
+    app.master.title('Job Tracker')
+    app.mainloop()
