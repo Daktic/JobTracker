@@ -13,15 +13,19 @@ class App():
         self.config = get_config()
         self.google_interface = Google(self.config['sheet_id'], self.config['sheet_name'])
 
-    def do_smth(self):
+    def calculate_metrics(self):
         g = self.google_interface.get_sheet_df()
-        jl = self.joblist.from_df(g)
         print(g)
-        print(jl)
+
+
+    def calculate_response_times(self):
+        pass
+
+
 
 
 
 
 if __name__ == "__main__":
     app = App()
-    app.do_smth()
+    app.calculate_metrics()
