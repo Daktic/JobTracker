@@ -8,11 +8,18 @@ from googleapiclient.discovery import build
 
 
 class Google:
-    def __init__(self):
+    def __init__(self, sheet_id: str, sheet_name: str):
         self.credential_file_path = None
         self.sheet_service = None
+        self.sheet_id = sheet_id
+        self.sheet_name = sheet_name
 
-    def get_credentials(self):
+    def get_sheet_df(self):
+        self._get_credentials()
+        self._connect()
+        return self._retrieve_sheet_df(self.sheet_id, self.sheet_name)
+
+    def _get_credentials(self):
         """
         This function will attempt to find the crednetials.json file in the current directory. If it is not found, it will exit the program.
         """
@@ -24,7 +31,7 @@ class Google:
             print("credentials.json not found. Please place the file in the current directory.")
             exit(1)
 
-    def get_sheet_df(self, sheet_id: str, sheet_name: str):
+    def _retrieve_sheet_df(self, sheet_id: str, sheet_name: str):
         """
         This function will get the sheet from the Google Sheet and return it as a dataframe
         """
@@ -40,7 +47,7 @@ class Google:
         else:
             return pd.DataFrame(values[1:], columns=values[0])
 
-    def connect(self):
+    def _connect(self):
         # If credentials is None, get the credentials
         if self.credential_file_path is None:
             self.get_credentials()
