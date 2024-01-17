@@ -19,6 +19,7 @@ class App():
     def calculate_metrics(self):
         self.job_df = self.google_interface.get_sheet_df()
         self.calculate_response_times()
+        self.calculate_job_titles()
 
     def calculate_response_times(self):
         """
@@ -38,6 +39,17 @@ class App():
         print(f"\nOf those {num_responses}:")
         print(f"Average response time: {round(response_time_col.mean(), 1)} Days")
         print(f"Median response time: {response_time_col.median()} Days")
+
+    def calculate_job_titles(self):
+        """
+        This will look at the job type column and run some stats on it
+        """
+        # Get the columns
+        job_type_col = self.job_df["Title"]
+        # Calculate job type metrics
+        distinct_counts = job_type_col.value_counts()
+        print(f"\nThere are {len(distinct_counts)} distinct job Titles")
+        print(f"The top 5 job titles are:{distinct_counts.head(5)}")
 
 
 if __name__ == "__main__":
