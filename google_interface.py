@@ -15,7 +15,6 @@ class Google:
         self.sheet_name = sheet_name
 
     def get_sheet_df(self):
-        self._get_credentials()
         self._connect()
         return self._retrieve_sheet_df(self.sheet_id, self.sheet_name)
 
@@ -50,7 +49,7 @@ class Google:
     def _connect(self):
         # If credentials is None, get the credentials
         if self.credential_file_path is None:
-            self.get_credentials()
+            self._get_credentials()
         # Create credentials from the service account key file
         credentials = service_account.Credentials.from_service_account_file(
             self.credential_file_path, scopes=['https://www.googleapis.com/auth/spreadsheets'])
