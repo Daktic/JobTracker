@@ -19,8 +19,10 @@ class MyTestCase(unittest.TestCase):
             exit(1)
 
         # Instantiate Credentials class and test
-        creds = Google()
-        creds.get_credentials()
+        sheet_id = "1IeUXt1ZlMQpGBscV5QTEWqxKFOXiH7NK8W5ZmK-xnZk"
+        sheet_name = "Sheet1"
+        creds = Google(sheet_id=sheet_id, sheet_name=sheet_name)
+        creds._get_credentials()
         try:
             filename = os.listdir(credential_path)[0]  # Assumes only one file in the directory
             self.assertEqual(os.path.join(os.getcwd(), "google_credentials", filename), creds.credential_file_path)
@@ -29,11 +31,12 @@ class MyTestCase(unittest.TestCase):
                 os.remove(credential_path + "/credentials.json")
 
     def test_get_sheet_df(self):
-        g = Google()
-        g.connect()
+        # Will change this later to be public available :)
         sheet_id = "1IeUXt1ZlMQpGBscV5QTEWqxKFOXiH7NK8W5ZmK-xnZk"
         sheet_name = "Sheet1"
-        df = g.get_sheet_df(sheet_id, sheet_name)
+        g = Google(sheet_id=sheet_id, sheet_name=sheet_name)
+        g._connect()
+        df = g._retrieve_sheet_df(sheet_id=sheet_id, sheet_name=sheet_name)
         print(df.columns)
         # self.assertIsNotNone(df)
 
