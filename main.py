@@ -1,4 +1,7 @@
 import json
+
+import numpy as np
+
 from application import JobList
 from google_interface import Google
 import pandas as pd
@@ -27,19 +30,23 @@ class App():
         This will look at the response time in days column and run some stats on it
         """
         # Get the columns
-        response_time_col = self.job_df["Response Time(DAYS)"]
+        application_date = pd.to_datetime(self.job_df["Application Date"])
         # Convert to numeric
-        response_time_col.replace("No Response Yet", '', inplace=True)
-        response_time_col = response_time_col.apply(pd.to_numeric)
+        response_date = pd.to_datetime(self.job_df["Response Date"])
+
+        self.job_df["response_time"] = response_date - application_date
+
+        response_time = self.job_df["response_time"].dropna().dt.days
+
         # Calculate response time metrics
-        total_apps = len(response_time_col)
-        num_responses = sum(response_time_col.notnull())
+        total_apps = len(application_date)
+        num_responses = sum(response_date.notnull())
         print(f"Of the {total_apps} jobs, {num_responses} have responded. "
               f"{round(total_apps / num_responses, 2)}%")
         # print out the data types of each value
         print(f"\nOf those {num_responses}:")
-        print(f"Average response time: {round(response_time_col.mean(), 1)} Days")
-        print(f"Median response time: {response_time_col.median()} Days")
+        print(f"Average response time: {round(response_time.mean(), 1)} Days")
+        print(f"Median response time: {response_time.median()} Days")
 
     def calculate_job_titles(self):
         """
